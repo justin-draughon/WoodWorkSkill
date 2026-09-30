@@ -8,6 +8,15 @@ description: Translate an approved woodworking design into an MCP-driven SketchU
 Bridge a woodworking design into SketchUp MCP operations.
 Do not redesign the project unless needed to preserve structural intent or resolve a modeling ambiguity.
 
+## Requirements and cost
+
+This bridge needs **SketchUp Pro (desktop), roughly $399/year.** SketchUp's web app cannot host
+extensions, and extension support is absent from both the Free and Go tiers — so the SketchupMCP
+extension cannot load below Pro.
+
+If a Pro licence is not available, use **`freecad-mcp-bridge`** instead. It does the same job with no
+licence gate. Do not silently substitute one for the other; say which you are using and why.
+
 ## References
 
 Read `references/sketchup-workflow.md` for component strategy, scene planning, naming consistency, and MCP bridge behavior.

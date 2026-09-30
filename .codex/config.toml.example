@@ -1,0 +1,74 @@
+# Sample Codex MCP configuration for the woodworking skill set.
+#
+# Copy the sections you need into your own ~/.codex/config.toml
+# (or your project's .codex/config.toml) and adjust the paths.
+#
+#   cp .codex/config.toml.example ~/.codex/config.toml
+#
+# Or register a server with the CLI instead of editing TOML by hand:
+#
+#   codex mcp add freecad -- uvx freecad-mcp
+#   codex mcp list
+#
+# You do NOT need both servers. Register the one matching the CAD tool
+# you actually have. See skills/sketchup-mcp-bridge/ and
+# skills/freecad-mcp-bridge/ for which to pick.
+#
+# Note: MCP servers are configured under [mcp_servers], NOT [mcp.servers].
+
+# ---------------------------------------------------------------------------
+# FreeCAD — free, open source, no account or API key required.
+# Preferred. Works with the `freecad-mcp-bridge` skill.
+# ---------------------------------------------------------------------------
+[mcp_servers.freecad]
+command = "uvx"
+args = ["freecad-mcp"]
+enabled = true
+
+# Requires the FreeCADMCP addon installed inside FreeCAD, and FreeCAD open
+# with its RPC server running (MCP Addon workbench -> Start RPC Server, or
+# enable "Auto-Start Server"). The RPC listens on localhost:9875 by default.
+#
+# The addon directory is version-specific:
+#   Windows : %APPDATA%\FreeCAD\v1-1\Mod\FreeCADMCP
+#   macOS   : ~/Library/Application Support/FreeCAD/v1-1/Mod/FreeCADMCP
+#   Linux   : ~/.local/share/FreeCAD/v1-1/Mod/FreeCADMCP
+# FreeCADMCP\InitGui.py must sit directly inside that folder.
+#
+# Optional: add --only-text-feedback to drop screenshots from tool results
+# and save tokens:
+#
+#   args = ["freecad-mcp", "--only-text-feedback"]
+#
+# Optional: pin the headless binary used by `execute_code_headless`. On
+# Windows the path must be PRE-QUOTED, because the server splits this value
+# with shlex and an unquoted path loses its backslashes:
+#
+#   args = ["freecad-mcp", "--freecadcmd", '"C:\Program Files\FreeCAD 1.1\bin\freecadcmd.exe"']
+#
+# Linux/macOS need no quoting because the path has no spaces/backslashes.
+
+# ---------------------------------------------------------------------------
+# SketchUp — requires SketchUp Pro (desktop) plus the companion extension.
+# Use the `sketchup-mcp-bridge` skill.
+#
+# SketchUp's web app cannot host extensions, and extension support is absent
+# from the Free and Go tiers, so a Pro licence is required.
+# ---------------------------------------------------------------------------
+[mcp_servers.sketchup]
+command = "uvx"
+args = ["sketchup-mcp"]
+enabled = false
+
+# Requires the SketchupMCP extension installed in SketchUp and started via
+# Extensions -> SketchupMCP -> Start Server (default port 9876).
+# Ships as an .rbz: Window -> Extension Manager -> Install Extension.
+
+# ---------------------------------------------------------------------------
+# Environment variables (optional)
+#
+# Set env vars per server with a nested [mcp_servers.<name>.env] table:
+# ---------------------------------------------------------------------------
+# [mcp_servers.sketchup.env]
+# SKETCHUP_MCP_HOST = "localhost"
+# SKETCHUP_MCP_PORT = "9876"
